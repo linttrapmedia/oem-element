@@ -11,6 +11,7 @@
   "scripts": {
     "build": "rimraf lib && node ./tasks/esbuild.js && npm run ts-types",
     "clean": "rimraf lib node_modules",
+    "test": "open test/index.html",
     "ts-types": "tsc --emitDeclarationOnly --outDir lib"
   },
   "keywords": [],
