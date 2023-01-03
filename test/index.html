@@ -1,0 +1,134 @@
+<html>
+  <head>
+    <script src="../lib/index.js"></script>
+    <script>
+      const { DIV } = OEM.Elements;
+
+      // Tests
+
+      function canRenderElement(sandbox) {
+        const el = DIV.render();
+        return el.outerHTML === "<div></div>";
+      }
+
+      function canSetInnerText(sandbox) {
+        const el = DIV.innerText("test");
+        return el.outerHTML === "<div>test</div>";
+      }
+
+      function canSetInnerHTML(sandbox) {
+        const child = DIV.innerText("test");
+        const el = DIV.innerHTML(child);
+        return el.outerHTML === "<div><div>test</div></div>";
+      }
+
+      function canAppendHtml(sandbox) {
+        const child = DIV.innerText("test");
+        const el = DIV.append("test", child);
+        return el.outerHTML === "<div>test<div>test</div></div>";
+      }
+
+      function canSetAttribute(sandbox) {
+        const el = DIV.attr("id", "test").innerText("test");
+        return el.outerHTML === `<div id="test">test</div>`;
+      }
+
+      function canSetMultipleAttributes(sandbox) {
+        const el = DIV.attr("id", "test")
+          .attr("style", "color:blue;")
+          .innerText("test");
+        return (
+          el.outerHTML === `<div id="test" style="color: blue;">test</div>`
+        );
+      }
+
+      function canSetStyle(sandbox) {
+        const el = DIV.style("color", "blue").innerText("test");
+        return el.outerHTML === `<div style="color: blue;">test</div>`;
+      }
+
+      function canSetMultipleStyles(sandbox) {
+        const el = DIV.style("color", "blue")
+          .style("fontWeight", "bold")
+          .innerText("test");
+        return (
+          el.outerHTML ===
+          `<div style="color: blue; font-weight: bold;">test</div>`
+        );
+      }
+
+      function canSetMultipleStylesConditionally(sandbox) {
+        const el = DIV.style("color", "blue", () => false)
+          .style("color", "red", () => true)
+          .style("fontWeight", "normal", () => true)
+          .style("fontWeight", "bold", false)
+          .innerText("test");
+        return (
+          el.outerHTML ===
+          `<div style="color: red; font-weight: normal;">test</div>`
+        );
+      }
+
+      function canAddEventListener(sandbox) {
+        let clicked = false;
+        const el = DIV.addEventListener("onclick", () => {
+          clicked = true;
+        }).render();
+        el.click();
+        return clicked;
+      }
+
+      function canSetStyle(sandbox) {
+        const el = DIV.style("color", "blue").innerText("test");
+        return el.outerHTML === `<div style="color: blue;">test</div>`;
+      }
+
+      // Test Runner
+
+      function run() {
+        const results = document.querySelector("#test-results");
+        const sandbox = document.querySelector("#test-sandbox");
+
+        [
+          canRenderElement,
+          canSetInnerText,
+          canSetInnerHTML,
+          canAppendHtml,
+          canSetAttribute,
+          canSetMultipleAttributes,
+          canSetStyle,
+          canSetMultipleStyles,
+          canSetMultipleStylesConditionally,
+          canAddEventListener,
+        ].forEach((test) => {
+          const result = test(sandbox);
+
+          const ok = document.createElement("span");
+          ok.style.color = "green";
+          ok.innerText = "✔";
+
+          const bad = document.createElement("span");
+          bad.style.color = "red";
+          bad.innerText = "𝘅";
+
+          const item = document.createElement("div");
+          item.style.display = "flex";
+          item.style.gap = "5px";
+          item.append(result ? ok : bad, test.name);
+
+          results.append(item);
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", run);
+    </script>
+  </head>
+  <body>
+    <h1>Element Tests</h1>
+    <h2>Results</h2>
+    <div id="test-results"></div>
+    <hr />
+    <h2>Sandbox</h2>
+    <div id="test-sandbox"></div>
+  </body>
+</html>

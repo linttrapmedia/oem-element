@@ -1,0 +1,23 @@
+{
+  "name": "mylib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "src/**/*"
+  ],
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "rimraf lib && node ./tasks/esbuild.js && npm run ts-types",
+    "clean": "rimraf lib node_modules",
+    "ts-types": "tsc --emitDeclarationOnly --outDir lib"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.12.1",
+    "typescript": "^4.2.4"
+  }
+}
