@@ -1,6 +1,7 @@
 const esbuild = require("esbuild");
+const env = process.env.NODE_ENV || "development";
 
-esbuild.buildSync({
+esbuild.build({
   bundle: true,
   entryPoints: ["src/index.ts"],
   globalName: "OEM.Elements",
@@ -8,5 +9,6 @@ esbuild.buildSync({
   outdir: "lib",
   sourcemap: true,
   target: ["esnext"],
+  watch: env === "development",
   write: true,
 });

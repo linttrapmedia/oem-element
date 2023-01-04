@@ -9,9 +9,12 @@
   "module": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "rimraf lib && node ./tasks/esbuild.js && npm run ts-types",
+    "build": "rimraf lib && NODE_ENV=production node ./tasks/esbuild.js && npm run ts-types",
+    "dev": "node ./tasks/esbuild.js --watch",
     "clean": "rimraf lib node_modules",
-    "test": "open test/index.html",
+    "publish": "",
+    "test:unit": "open test/unit.html",
+    "test:integration": "open test/integration.html",
     "ts-types": "tsc --emitDeclarationOnly --outDir lib"
   },
   "keywords": [],

@@ -12,7 +12,10 @@ class OEM_ELEMENT<T extends HTMLElement> {
     (boolean | (() => boolean) | "hover")?
   ][] = [];
   #tag: string = "div";
-  #subscriptions: ((cb: () => any) => void)[] = [];
+  #subscriptions: {
+    subscriptionFunction: (cb: () => void) => void;
+    handler?: (el: ThisType<OEM_ELEMENT<T>>) => void;
+  }[] = [];
   constructor(tag: string) {
     this.#tag = tag;
     this._applyAttributes = this._applyAttributes.bind(this);
@@ -112,7 +115,17 @@ class OEM_ELEMENT<T extends HTMLElement> {
       this._applyInnerHTML();
     };
     run();
-    this.#subscriptions.forEach((subscribe) => subscribe(run));
+    this.#subscriptions.forEach(({ subscriptionFunction, handler }) => {
+      if (handler) {
+        const wrapper = () => {
+          handler(this as ThisType<OEM_ELEMENT<T>>);
+          run();
+        };
+        subscriptionFunction(wrapper.bind(this));
+      } else {
+        subscriptionFunction(run);
+      }
+    });
   }
   append(...nodes: (string | Node)[]) {
     this.#nodes = nodes;
@@ -148,8 +161,11 @@ class OEM_ELEMENT<T extends HTMLElement> {
     this._createElement();
     return this.#el;
   }
-  subscribe(subscriber: (cb: () => any) => void) {
-    this.#subscriptions.push(subscriber);
+  subscribe(
+    subscriptionFunction: (cb: () => void) => void,
+    handler?: (el: ThisType<OEM_ELEMENT<T>>) => void
+  ) {
+    this.#subscriptions.push({ subscriptionFunction, handler });
     return this;
   }
   style(

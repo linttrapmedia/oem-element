@@ -4,6 +4,15 @@
     <script>
       const { DIV } = OEM.Elements;
 
+      // mocks
+
+      function MockBus() {
+        const listeners = [];
+        const pub = () => listeners.forEach((listener) => listener());
+        const sub = (cb) => listeners.push(cb);
+        return { pub, sub };
+      }
+
       // Tests
 
       function canRenderElement(sandbox) {
@@ -78,9 +87,25 @@
         return clicked;
       }
 
-      function canSetStyle(sandbox) {
-        const el = DIV.style("color", "blue").innerText("test");
-        return el.outerHTML === `<div style="color: blue;">test</div>`;
+      function canSubscribeToEventBusWithoutHandler(sandbox) {
+        let color = "blue";
+        const bus = new MockBus();
+        const el = DIV.style("color", () => color)
+          .subscribe(bus.sub)
+          .innerText("test");
+        color = "red";
+        bus.pub();
+        return el.outerHTML === `<div style="color: red;">test</div>`;
+      }
+
+      function canSubscribeToEventBusWithHandler(sandbox) {
+        let color = "blue";
+        const bus = new MockBus();
+        const el = DIV.style("color", () => color)
+          .subscribe(bus.sub, () => (color = "green"))
+          .innerText("test");
+        bus.pub();
+        return el.outerHTML === `<div style="color: green;">test</div>`;
       }
 
       // Test Runner
@@ -100,6 +125,8 @@
           canSetMultipleStyles,
           canSetMultipleStylesConditionally,
           canAddEventListener,
+          canSubscribeToEventBusWithoutHandler,
+          canSubscribeToEventBusWithHandler,
         ].forEach((test) => {
           const result = test(sandbox);
 
@@ -124,7 +151,7 @@
     </script>
   </head>
   <body>
-    <h1>Element Tests</h1>
+    <h1>Unit Tests</h1>
     <h2>Results</h2>
     <div id="test-results"></div>
     <hr />

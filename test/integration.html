@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <script src="../lib/index.js"></script>
+    <script>
+      const { DIV, H3 } = OEM.Elements;
+
+      // mocks
+
+      function MockBus() {
+        const listeners = [];
+        const pub = () => listeners.forEach((listener) => listener());
+        const sub = (cb) => listeners.push(cb);
+        return { pub, sub };
+      }
+
+      // Tests
+
+      function todoList(sandbox) {
+        const busOne = new MockBus();
+        const busTwo = new MockBus();
+
+        // vars
+        let primaryColor = "blue";
+        let secondaryColor = "red";
+        let labelA = "A";
+        let labelB = "B";
+
+        const handleClick = () => {
+          primaryColor = "green";
+          secondaryColor = "green";
+          busOne.pub();
+          labelA = "A-clicked";
+          labelB = "B-clicked";
+          busTwo.pub();
+          console.log("clicked");
+        };
+
+        const el = DIV.addEventListener("click", handleClick)
+          .subscribe(busOne.sub)
+          .subscribe(busTwo.sub)
+          .innerHTML(() =>
+            DIV.append(
+              H3.innerText("Todo"),
+              DIV.style("color", primaryColor).innerText(labelA),
+              DIV.style("color", secondaryColor).innerText(labelB)
+            )
+          );
+        sandbox.append(el);
+        el.click();
+        return primaryColor === "green";
+      }
+
+      // Test Runner
+
+      function run() {
+        const results = document.querySelector("#test-results");
+        const sandbox = document.querySelector("#test-sandbox");
+
+        [todoList].forEach((test) => {
+          const result = test(sandbox);
+
+          const ok = document.createElement("span");
+          ok.style.color = "green";
+          ok.innerText = "✔";
+
+          const bad = document.createElement("span");
+          bad.style.color = "red";
+          bad.innerText = "𝘅";
+
+          const item = document.createElement("div");
+          item.style.display = "flex";
+          item.style.gap = "5px";
+          item.append(result ? ok : bad, test.name);
+
+          results.append(item);
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", run);
+    </script>
+  </head>
+  <body>
+    <h1>Integration Tests</h1>
+    <h2>Results</h2>
+    <div id="test-results"></div>
+    <hr />
+    <h2>Sandbox</h2>
+    <div id="test-sandbox"></div>
+  </body>
+</html>
