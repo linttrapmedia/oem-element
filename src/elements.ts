@@ -69,8 +69,9 @@ class OEM_ELEMENT<T extends HTMLElement> {
   }
   private _applyListeners() {
     this.#listeners.forEach(([event, func]) => {
-      this.#el.removeEventListener(event, func);
-      this.#el.addEventListener(event, func);
+      const evt = event.replace(/^on/, "");
+      this.#el.removeEventListener(evt, func) as any;
+      this.#el.addEventListener(evt, func) as any;
     });
   }
   private _applyNodes() {

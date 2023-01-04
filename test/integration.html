@@ -34,18 +34,17 @@
             DIV.append(
               UL.append(
                 ...todos.map((todo) =>
-                  LI.addEventListener("click", () => {
-                    console.log("clicked", todo);
+                  LI.addEventListener("onclick", () => {
                     addDone(todo);
                   })
-                    .addEventListener("click", () => removeTodo(todo))
+                    .addEventListener("onclick", () => removeTodo(todo))
                     .innerText(todo)
                 )
               ),
               UL.append(
                 ...dones.map((done) =>
-                  LI.addEventListener("click", () => addTodo(done))
-                    .addEventListener("click", () => removeDone(done))
+                  LI.addEventListener("onclick", () => addTodo(done))
+                    .addEventListener("onclick", () => removeDone(done))
                     .style("textDecoration", "line-through")
                     .innerText(done)
                 )

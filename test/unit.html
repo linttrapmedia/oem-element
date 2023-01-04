@@ -80,7 +80,7 @@
 
       function canAddEventListener(sandbox) {
         let clicked = false;
-        const el = DIV.addEventListener("click", () => {
+        const el = DIV.addEventListener("onclick", () => {
           clicked = true;
         }).render();
         el.click();
