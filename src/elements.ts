@@ -68,7 +68,10 @@ class OEM_ELEMENT<T extends HTMLElement> {
     });
   }
   private _applyListeners() {
-    this.#listeners.forEach(([event, func]) => (this.#el[event] = func));
+    this.#listeners.forEach(([event, func]) => {
+      this.#el.removeEventListener(event, func);
+      this.#el.addEventListener(event, func);
+    });
   }
   private _applyNodes() {
     if (this.#nodes.length > 0) {
@@ -99,7 +102,7 @@ class OEM_ELEMENT<T extends HTMLElement> {
             ? this.#innerHTML()
             : this.#innerHTML
         ) as HTMLElement;
-        this.#el.innerHTML = _val.outerHTML;
+        this.#el.appendChild(_val);
       };
       apply();
     }

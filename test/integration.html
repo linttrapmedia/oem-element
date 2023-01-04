@@ -2,7 +2,7 @@
   <head>
     <script src="../lib/index.js"></script>
     <script>
-      const { DIV, H3 } = OEM.Elements;
+      const { DIV, H3, H4, UL, LI } = OEM.Elements;
 
       // mocks
 
@@ -16,38 +16,57 @@
       // Tests
 
       function todoList(sandbox) {
-        const busOne = new MockBus();
-        const busTwo = new MockBus();
+        const bus = new MockBus();
+        const todos = [];
+        const dones = [];
+        const addTodo = (todo) => (todos.push(todo), bus.pub());
+        const addDone = (done) => (dones.push(done), bus.pub());
+        const removeDone = (done) => (
+          dones.splice(dones.indexOf(done), 1), bus.pub()
+        );
+        const removeTodo = (todo) => (
+          todos.splice(todos.indexOf(todo), 1), bus.pub()
+        );
 
-        // vars
-        let primaryColor = "blue";
-        let secondaryColor = "red";
-        let labelA = "A";
-        let labelB = "B";
-
-        const handleClick = () => {
-          primaryColor = "green";
-          secondaryColor = "green";
-          busOne.pub();
-          labelA = "A-clicked";
-          labelB = "B-clicked";
-          busTwo.pub();
-          console.log("clicked");
-        };
-
-        const el = DIV.addEventListener("click", handleClick)
-          .subscribe(busOne.sub)
-          .subscribe(busTwo.sub)
-          .innerHTML(() =>
+        const el = DIV.subscribe(bus.sub).innerHTML(() =>
+          DIV.append(
+            H3.innerText("Todo"),
             DIV.append(
-              H3.innerText("Todo"),
-              DIV.style("color", primaryColor).innerText(labelA),
-              DIV.style("color", secondaryColor).innerText(labelB)
+              UL.append(
+                ...todos.map((todo) =>
+                  LI.addEventListener("click", () => {
+                    console.log("clicked", todo);
+                    addDone(todo);
+                  })
+                    .addEventListener("click", () => removeTodo(todo))
+                    .innerText(todo)
+                )
+              ),
+              UL.append(
+                ...dones.map((done) =>
+                  LI.addEventListener("click", () => addTodo(done))
+                    .addEventListener("click", () => removeDone(done))
+                    .style("textDecoration", "line-through")
+                    .innerText(done)
+                )
+              )
             )
-          );
+          )
+        );
+
+        addTodo("Pay Bills");
+        addTodo("Buy Groceries");
+        addTodo("Clean House");
+
+        const firstItem = el.querySelector("ul > li");
+        firstItem.click();
         sandbox.append(el);
-        el.click();
-        return primaryColor === "green";
+        return (
+          el.outerHTML ===
+            `<div><div><h3>Todo</h3><div><ul><li>Buy Groceries</li><li>Clean House</li></ul><ul><li style="text-decoration: line-through;">Pay Bills</li></ul></div></div></div>` &&
+          todos.length === 2 &&
+          dones.length === 1
+        );
       }
 
       // Test Runner
