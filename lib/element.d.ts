@@ -14,7 +14,7 @@ declare class OEM_ELEMENT<T extends HTMLElement> {
     innerText(text: (string | number) | (() => string | number)): T;
     addEventListener<E extends keyof GlobalEventHandlers>(ev: E, cb: (e: Event) => any): this;
     render(): T;
-    subscribe(subscriber: (cb: () => any) => void): this;
+    subscribe(subscriptionFunction: (cb: () => void) => void, handler?: (el: ThisType<OEM_ELEMENT<T>>) => void): this;
     style(prop: keyof CSSStyleDeclaration, val: string | (() => string), condition?: boolean | (() => boolean) | "hover"): this;
 }
 export declare const A: OEM_ELEMENT<HTMLAnchorElement>;

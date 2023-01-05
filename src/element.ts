@@ -1,6 +1,7 @@
 class OEM_ELEMENT<T extends HTMLElement> {
   #attrs: [string, string | (() => string), (boolean | (() => boolean))?][] =
     [];
+  #classNames: [string, (boolean | (() => boolean))?][] = [];
   #el: T;
   #innerHTML: HTMLElement | (() => HTMLElement);
   #innerText: (string | number) | (() => string | number);
@@ -19,6 +20,7 @@ class OEM_ELEMENT<T extends HTMLElement> {
   constructor(tag: string) {
     this.#tag = tag;
     this._applyAttributes = this._applyAttributes.bind(this);
+    this._applyClassNames = this._applyClassNames.bind(this);
     this._applyInnerHTML = this._applyInnerHTML.bind(this);
     this._applyInnerText = this._applyInnerText.bind(this);
     this._applyListeners = this._applyListeners.bind(this);
@@ -41,6 +43,14 @@ class OEM_ELEMENT<T extends HTMLElement> {
         const _val = (typeof val === "function" ? val() : val) as string;
         if (_oldVal !== _val) (<any>this.#el)[prop] = _val;
       };
+      if (typeof condition === "boolean") return condition ? apply() : null;
+      if (typeof condition === "function") return condition() ? apply() : null;
+      apply();
+    });
+  }
+  private _applyClassNames() {
+    this.#classNames.forEach(([className, condition = true]) => {
+      const apply = () => this.#el.classList.add(className);
       if (typeof condition === "boolean") return condition ? apply() : null;
       if (typeof condition === "function") return condition() ? apply() : null;
       apply();
@@ -113,6 +123,7 @@ class OEM_ELEMENT<T extends HTMLElement> {
     const run = () => {
       this._applyAttributes();
       this._applyStyles();
+      this._applyClassNames();
       this._applyListeners();
       this._applyNodes();
       this._applyInnerText();
@@ -131,6 +142,13 @@ class OEM_ELEMENT<T extends HTMLElement> {
       }
     });
   }
+  addEventListener<E extends keyof GlobalEventHandlers>(
+    ev: E,
+    cb: (e: Event) => any
+  ) {
+    this.#listeners.push([ev, cb]);
+    return this;
+  }
   append(...nodes: (string | Node)[]) {
     this.#nodes = nodes;
     this._createElement();
@@ -144,8 +162,12 @@ class OEM_ELEMENT<T extends HTMLElement> {
     this.#attrs.push([name, val, condition]);
     return this;
   }
-  innerHTML(node: HTMLElement | (() => HTMLElement)) {
-    this.#innerHTML = node;
+  className(className: string, condition?: boolean | (() => boolean)) {
+    this.#classNames.push([className, condition]);
+    return this;
+  }
+  innerHTML(html: HTMLElement | (() => HTMLElement)) {
+    this.#innerHTML = html;
     this._createElement();
     return this.#el;
   }
@@ -153,13 +175,6 @@ class OEM_ELEMENT<T extends HTMLElement> {
     this.#innerText = text;
     this._createElement();
     return this.#el;
-  }
-  addEventListener<E extends keyof GlobalEventHandlers>(
-    ev: E,
-    cb: (e: Event) => any
-  ) {
-    this.#listeners.push([ev, cb]);
-    return this;
   }
   render(): T {
     this._createElement();
