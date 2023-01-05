@@ -46,7 +46,7 @@ There is a single html tag function per html tag. All tag functions exist in the
 
 `A`,`AREA`,`ARTICLE`,`ASIDE`,`AUDIO`,`B`,`BASE`,`BDI`,`BDO`,`BLOCKQUOTE`,`BODY`,`BR`,`BUTTON`,`CANVAS`,`CAPTION`,`CITE`,`CODE`,`COL`,`COLGROUP`,`DATA`,`DATALIST`,`DD`,`DEL`,`DETAILS`,`DFN`,`DIALOG`,`DIV`,`DL`,`DT`,`EM`,`EMBED`,`FIELDSET`,`FIGCAPTION`,`FIGURE`,`FOOTER`,`FORM`,`H1`,`H2`,`H3`,`H4`,`H5`,`H6`,`HEAD`,`HEADER`,`HGROUP`,`HR`,`HTML`,`I`,`IFRAME`,`IMG`,`INPUT`,`INS`,`KBD`,`LABEL`,`LEGEND`,`LI`,`LINK`,`MAIN`,`MAP`,`MARK`,`MENU`,`META`,`METER`,`NAV`,`NOSCRIPT`,`OBJECT`,`OL`,`OPTGROUP`,`OPTION`,`OUTPUT`,`P`,`PICTURE`,`PRE`,`PROGRESS`,`Q`,`RP`,`RT`,`RUBY`,`S`,`SAMP`,`SCRIPT`,`SECTION`,`SELECT`,`SLOT`,`SMALL`,`SOURCE`,`SPAN`,`STRONG`,`STYLE`,`SUB`,`SUMMARY`,`SUP`,`TABLE`,`TBODY`,`TD`,`TEMPLATE`,`TEXTAREA`,`TFOOT`,`TH`,`THEAD`,`TIME`,`TITLE`,`TR`,`TRACK`,`U`,`UL`,`VAR`,`VIDEO`,`WBR`
 
-### [Methods](src/element.ts)
+### Methods
 
 Each tag function uses the "builder pattern" which allows you to quickly and easily write html in javascript that is every bit as _declarative_ and readable as regular html but with the added benefit of declaring styling and behavior inline a clean and scalable way. There are two types of methods: Non-Rendering (which configure the element) and Rendering (which render the element).
 
