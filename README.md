@@ -1,10 +1,10 @@
 # oem-element
 
-_oem-element_ is part of [OEM](https://oem.js.org). OEM is a UI/UX ecosystem of 100% dependency-free ui libraries implemented as light abstraction layers on top of the already existing native browser javascript objects.
+_oem-element_ is part of [OEM](https://oem.js.org). OEM is a UI/UX ecosystem of 100% dependency-free ui libraries implemented as light abstraction layers on top of the already existing native browser javascript objects. This makes for incredibly small, easy-to-understand libraries that leverage your pre-existing knowledge of html, css and javascript.
 
 ## oem-element
 
-`OEM.Element` is a simple "templating engine" that enables you to manage html, styling and behavior in a clean, declarative syntax implemented as a light abstraction on top of the native [Element](https://developer.mozilla.org/en-US/docs/Web/API/Element) object.
+`OEM.Element` is OEM's "templating engine". It enables you to manage html, styling and behavior in a clean, declarative syntax implemented as a light abstraction on top of the native [Element](https://developer.mozilla.org/en-US/docs/Web/API/Element) object.
 
 ## Get Started
 
@@ -23,7 +23,7 @@ import { DIV } from "@linttrapmedia/oem-element";
 DIV.innerText("Hello World");
 ```
 
-### Using when loaded from a CDN
+### Using when loaded from a CDN - `~3kb` Gzipped
 
 #### Load in html head
 
