@@ -2,12 +2,12 @@
   "name": "@linttrapmedia/oem-element",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "lib/element.js",
   "files": [
     "src/**/*"
   ],
-  "module": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "module": "lib/element.js",
+  "types": "lib/element.d.ts",
   "scripts": {
     "build": "rimraf lib && NODE_ENV=production node ./tasks/esbuild.js && npm run ts-types",
     "dev": "node ./tasks/esbuild.js --watch",
@@ -15,7 +15,7 @@
     "publish": "npm publish @linttrapmedia/oem-element",
     "test:unit": "open test/unit.html",
     "test:integration": "open test/integration.html",
-    "ts-types": "tsc --emitDeclarationOnly --outDir lib"
+    "ts-types": "tsc --emitDeclarationOnly --outFile lib/element.d.ts"
   },
   "keywords": [],
   "author": "",
