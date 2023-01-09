@@ -2,7 +2,7 @@
   "name": "@linttrapmedia/oem-element",
   "version": "1.0.0",
   "description": "",
-  "main": "src/element.ts",
+  "main": "dist/element.js",
   "files": [
     "src/**/*"
   ],
