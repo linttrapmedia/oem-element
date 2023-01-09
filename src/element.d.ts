@@ -130,6 +130,3 @@ declare module "element" {
     export const VIDEO: OEM_ELEMENT<HTMLElement>;
     export const WBR: OEM_ELEMENT<HTMLElement>;
 }
-declare module "index" {
-    export * from "element";
-}

@@ -2,9 +2,7 @@
 
 _oem-element_ is part of [OEM](https://oem.js.org). OEM is a UI/UX ecosystem of 100% dependency-free ui libraries implemented as light abstraction layers on top of the already existing native browser javascript objects. This makes for incredibly small, easy-to-understand libraries that leverage your pre-existing knowledge of html, css and javascript.
 
-## oem-element
-
-`OEM.Element` is OEM's "templating engine". It enables you to manage html, styling and behavior in a clean, declarative syntax implemented as a light abstraction on top of the native [Element](https://developer.mozilla.org/en-US/docs/Web/API/Element) object.
+`OEM.Element` is OEM's "templating engine". It enables you to manage html, styling and behavior with a clean, declarative syntax implemented as a light abstraction on top of the native [Element](https://developer.mozilla.org/en-US/docs/Web/API/Element) object.
 
 ## Get Started
 
@@ -28,7 +26,7 @@ DIV.innerText("Hello World");
 #### Load in html head
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/oem-element/1.0.0/oem-element.min.js"></script>
+<script src="https://unpkg.com/@linttrapmedia/oem-element/dist/element.js"></script>
 ```
 
 #### Destructure and use in plain javascript
@@ -44,11 +42,11 @@ DIV.innerText("Hello World");
 
 There is a single html tag function per html tag. All tag functions exist in the `OEM.Element` object.
 
-`A`,`AREA`,`ARTICLE`,`ASIDE`,`AUDIO`,`B`,`BASE`,`BDI`,`BDO`,`BLOCKQUOTE`,`BODY`,`BR`,`BUTTON`,`CANVAS`,`CAPTION`,`CITE`,`CODE`,`COL`,`COLGROUP`,`DATA`,`DATALIST`,`DD`,`DEL`,`DETAILS`,`DFN`,`DIALOG`,`DIV`,`DL`,`DT`,`EM`,`EMBED`,`FIELDSET`,`FIGCAPTION`,`FIGURE`,`FOOTER`,`FORM`,`H1`,`H2`,`H3`,`H4`,`H5`,`H6`,`HEAD`,`HEADER`,`HGROUP`,`HR`,`HTML`,`I`,`IFRAME`,`IMG`,`INPUT`,`INS`,`KBD`,`LABEL`,`LEGEND`,`LI`,`LINK`,`MAIN`,`MAP`,`MARK`,`MENU`,`META`,`METER`,`NAV`,`NOSCRIPT`,`OBJECT`,`OL`,`OPTGROUP`,`OPTION`,`OUTPUT`,`P`,`PICTURE`,`PRE`,`PROGRESS`,`Q`,`RP`,`RT`,`RUBY`,`S`,`SAMP`,`SCRIPT`,`SECTION`,`SELECT`,`SLOT`,`SMALL`,`SOURCE`,`SPAN`,`STRONG`,`STYLE`,`SUB`,`SUMMARY`,`SUP`,`TABLE`,`TBODY`,`TD`,`TEMPLATE`,`TEXTAREA`,`TFOOT`,`TH`,`THEAD`,`TIME`,`TITLE`,`TR`,`TRACK`,`U`,`UL`,`VAR`,`VIDEO`,`WBR`
+`A`, `AREA`, `ARTICLE`, `ASIDE`, `AUDIO`, `B`, `BASE`, `BDI`, `BDO`, `BLOCKQUOTE`, `BODY`, `BR`, `BUTTON`, `CANVAS`, `CAPTION`, `CITE`, `CODE`, `COL`, `COLGROUP`, `DATA`, `DATALIST`, `DD`, `DEL`, `DETAILS`, `DFN`, `DIALOG`, `DIV`, `DL`, `DT`, `EM`, `EMBED`, `FIELDSET`, `FIGCAPTION`, `FIGURE`, `FOOTER`, `FORM`, `H1`, `H2`, `H3`, `H4`, `H5`, `H6`, `HEAD`, `HEADER`, `HGROUP`, `HR`, `HTML`, `I`, `IFRAME`, `IMG`, `INPUT`, `INS`, `KBD`, `LABEL`, `LEGEND`, `LI`, `LINK`, `MAIN`, `MAP`, `MARK`, `MENU`, `META`, `METER`, `NAV`, `NOSCRIPT`, `OBJECT`, `OL`, `OPTGROUP`, `OPTION`, `OUTPUT`, `P`, `PICTURE`, `PRE`, `PROGRESS`, `Q`, `RP`, `RT`, `RUBY`, `S`, `SAMP`, `SCRIPT`, `SECTION`, `SELECT`, `SLOT`, `SMALL`, `SOURCE`, `SPAN`, `STRONG`, `STYLE`, `SUB`, `SUMMARY`, `SUP`, `TABLE`, `TBODY`, `TD`, `TEMPLATE`, `TEXTAREA`, `TFOOT`, `TH`, `THEAD`, `TIME`, `TITLE`, `TR`, `TRACK`, `U`, `UL`, `VAR`, `VIDEO`, `WBR`
 
 ### Methods
 
-Each tag function uses the "builder pattern" which allows you to quickly and easily write html in javascript that is every bit as _declarative_ and readable as regular html but with the added benefit of declaring styling and behavior inline a clean and scalable way. There are two types of methods: Non-Rendering (which configure the element) and Rendering (which render the element).
+Each tag function uses the "builder pattern" which allows you to quickly and easily write html in javascript that is every bit as _declarative_ and readable as regular html but with the added benefit of declaring styling and behavior inline in a clean and scalable way. There are two types of methods: Non-Rendering (which configure the element) and Rendering (which render the element).
 
 - `addEventListener(ev, cb)` - adds an event listener
 - `attr(name, val, condition)` - adds an attribute
@@ -60,7 +58,9 @@ Each tag function uses the "builder pattern" which allows you to quickly and eas
 - `innerText(text)` - sets innerText and renders
 - `render()` - renders empty element
 
-_Non Rendering Methods_
+## _Non Rendering Methods_
+
+---
 
 #### `addEventListener(ev, cb)` - adds an event listener
 
@@ -101,7 +101,9 @@ val: string | (() => string) // css value
 condition?: boolean | (() => boolean) | "hover" // condition check
 ```
 
-_Rendering Methods_ - These must be called last in the chain
+## _Rendering Methods_ - These must be called last in the chain
+
+---
 
 #### `append(...nodes)` - appends nodes to element and renders
 
@@ -155,9 +157,9 @@ DIV.innerHTML(DIV.innerText("example")); // <div><div>example</div></div>
 DIV.innerHTML(() => DIV.innerText("example")); // <div><div>example</div></div>
 ```
 
-#### Render element with multiple attributes and styles and uses conditions.
+#### Render element with multiple attributes and styles and conditions.
 
-Notice how we can define multiples of the same attribute or style and add a condition? This allows us to dynamically declare state inline without having to get fancy about our interactions between our dom, styling, behaviors, etc.
+Notice how we can define multiples of the same attribute or style and add a condition? This allows us to dynamically declare state inline without the code falling apart.
 
 ```typescript
 UL.attr("id", "example")

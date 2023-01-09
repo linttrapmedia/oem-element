@@ -5,10 +5,10 @@ const pkg = require("../package.json");
 esbuild.build({
   bundle: true,
   entryNames: `element`,
-  entryPoints: ["src/index.ts"],
+  entryPoints: ["src/element.ts"],
   globalName: "OEM.Elements",
   minify: true,
-  outdir: "lib",
+  outdir: "dist",
   sourcemap: true,
   target: ["esnext"],
   treeShaking: true,

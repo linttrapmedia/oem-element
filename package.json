@@ -2,24 +2,24 @@
   "name": "@linttrapmedia/oem-element",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/element.js",
+  "main": "src/element.ts",
   "files": [
     "src/**/*"
   ],
-  "module": "lib/element.js",
+  "module": "src/element.ts",
   "types": "lib/element.d.ts",
   "scripts": {
-    "build": "rimraf lib && NODE_ENV=production node ./tasks/esbuild.js && npm run ts-types",
+    "build": "rimraf dist && NODE_ENV=production node ./tasks/esbuild.js && npm run ts-types",
     "dev": "node ./tasks/esbuild.js --watch",
-    "clean": "rimraf lib node_modules",
+    "clean": "rimraf dist node_modules",
     "publish": "npm publish @linttrapmedia/oem-element",
     "test:unit": "open test/unit.html",
     "test:integration": "open test/integration.html",
-    "ts-types": "tsc --emitDeclarationOnly --outFile lib/element.d.ts"
+    "ts-types": "tsc --emitDeclarationOnly --outFile src/element.d.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "esbuild": "^0.12.1",
     "typescript": "^4.2.4"
