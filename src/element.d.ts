@@ -1,4 +1,4 @@
-declare module "element" {
+declare module "@linttrapmedia/element" {
     class OEM_ELEMENT<T extends HTMLElement> {
         #private;
         constructor(tag: string);
