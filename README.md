@@ -26,7 +26,7 @@ DIV.innerText("Hello World");
 #### Load in html head
 
 ```html
-<script src="https://unpkg.com/@linttrapmedia/oem-element/dist/element.js"></script>
+<script src="https://unpkg.com/@linttrapmedia/oem-element"></script>
 ```
 
 #### Destructure and use in plain javascript
