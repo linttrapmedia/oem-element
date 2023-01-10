@@ -1,6 +1,6 @@
 {
   "name": "@linttrapmedia/oem-element",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/element.js",
   "files": [
@@ -15,7 +15,7 @@
     "publish": "npm publish @linttrapmedia/oem-element",
     "test:unit": "open test/unit.html",
     "test:integration": "open test/integration.html",
-    "gen:types": "tsc --emitDeclarationOnly --outFile src/element.d.ts"
+    "gen:types": "tsc --emitDeclarationOnly --outdir src"
   },
   "keywords": [],
   "author": "",
