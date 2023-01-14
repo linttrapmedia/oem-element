@@ -17,7 +17,7 @@ declare class OEM_ELEMENT<T extends HTMLElement> {
     innerText(text: (string | number) | (() => string | number)): T;
     render(): T;
     subscribe(subscriptionFunction: (cb: () => void) => void, handler?: (el: ThisType<OEM_ELEMENT<T>>) => void): this;
-    style(prop: keyof CSSStyleDeclaration, val: string | (() => string), condition?: boolean | (() => boolean) | "hover"): this;
+    style(prop: keyof CSSStyleDeclaration, val: string | (() => string), condition?: boolean | (() => boolean)): this;
 }
 export declare const A: OEM_ELEMENT<HTMLAnchorElement>;
 export declare const AREA: OEM_ELEMENT<HTMLAreaElement>;

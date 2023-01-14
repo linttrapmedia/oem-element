@@ -7,11 +7,8 @@ class OEM_ELEMENT<T extends HTMLElement> {
   #innerText: (string | number) | (() => string | number);
   #listeners: [string, (...args: any[]) => any][] = [];
   #nodes: (string | Node)[] = [];
-  #styles: [
-    string,
-    string | (() => string),
-    (boolean | (() => boolean) | "hover")?
-  ][] = [];
+  #styles: [string, string | (() => string), (boolean | (() => boolean))?][] =
+    [];
   #tag: string = "div";
   #subscriptions: {
     subscriptionFunction: (cb: () => void) => void;
@@ -29,6 +26,7 @@ class OEM_ELEMENT<T extends HTMLElement> {
     this._createElement = this._createElement.bind(this);
     this.append = this.append.bind(this);
     this.attr = this.attr.bind(this);
+    this.className = this.className.bind(this);
     this.innerHTML = this.innerHTML.bind(this);
     this.innerText = this.innerText.bind(this);
     this.addEventListener = this.addEventListener.bind(this);
@@ -58,8 +56,6 @@ class OEM_ELEMENT<T extends HTMLElement> {
   }
   private _applyStyles() {
     this.#styles.forEach(([prop, val, condition = true]) => {
-      const resetVal = (<any>this.#el).style[prop as any];
-      const reset = () => ((<any>this.#el).style[prop as any] = resetVal);
       const apply = () => {
         const _oldVal = (<any>this.#el).style[prop as any];
         const _val = (typeof val === "function" ? val() : val) as string;
@@ -67,13 +63,6 @@ class OEM_ELEMENT<T extends HTMLElement> {
       };
       if (typeof condition === "boolean") return condition ? apply() : null;
       if (typeof condition === "function") return condition() ? apply() : null;
-      if (condition === "hover") {
-        this.#el.addEventListener("mouseenter", apply);
-        this.#el.addEventListener("mouseleave", reset);
-        return;
-      }
-      if (typeof condition === "string")
-        return this.#el.addEventListener(condition, apply);
       apply();
     });
   }
@@ -190,7 +179,7 @@ class OEM_ELEMENT<T extends HTMLElement> {
   style(
     prop: keyof CSSStyleDeclaration,
     val: string | (() => string),
-    condition?: boolean | (() => boolean) | "hover"
+    condition?: boolean | (() => boolean)
   ) {
     this.#styles.push([prop as any, val, condition]);
     return this;

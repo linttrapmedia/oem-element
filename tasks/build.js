@@ -1,12 +1,11 @@
 const esbuild = require("esbuild");
 const env = process.env.NODE_ENV || "development";
-const pkg = require("../package.json");
 
 esbuild.build({
   bundle: true,
   entryNames: `element`,
-  entryPoints: ["src/element.ts"],
-  globalName: "OEM.Elements",
+  entryPoints: ["src/index.ts"],
+  globalName: "OEM.Element",
   minify: true,
   outdir: "dist",
   sourcemap: true,
